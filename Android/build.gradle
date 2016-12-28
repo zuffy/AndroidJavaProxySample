@@ -1,0 +1,86 @@
+apply plugin: 'com.android.application'
+
+configurations {
+    deployerJars  
+}
+
+buildscript {
+    repositories {
+		jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.2'
+    }
+}
+
+dependencies {
+	compile fileTree(include: '*.jar', dir: 'libs')
+	compile 'com.android.support:support-v4:25.0.0'
+	compile 'com.android.support:support-annotations:25.0.0'
+	compile 'com.android.support:recyclerview-v7:25.0.0'
+	compile 'com.android.support:appcompat-v7:25.0.0'
+}
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+	flatDir {
+		dirs 'libs'
+	}
+}
+
+android {
+	packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+    }
+
+	dexOptions {
+		maxProcessCount 4 // this is the default value
+		javaMaxHeapSize "4g"
+	}
+
+	defaultConfig {
+		multiDexEnabled true
+		applicationId "com.test.callbacktest"
+	}
+
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+	
+	lintOptions{
+		abortOnError false
+	}
+	
+   	buildTypes{
+     	release {
+			debuggable false
+			minifyEnabled true
+			shrinkResources true
+			proguardFile 'proguard-project.txt'
+     	}
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs']
+        }
+
+        // Move the tests to tests/java, tests/res, etc...
+        instrumentTest.setRoot('tests')
+
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+}
+
+

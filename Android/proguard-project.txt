@@ -1,0 +1,163 @@
+
+-optimizationpasses 5
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontoptimize
+-verbose
+-dontskipnonpubliclibraryclassmembers
+-ignorewarnings
+-dontnote
+-dontwarn
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
+
+
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.preference.Preference
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+-keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,*Annotation*,EnclosingMethod
+
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+
+-keepclassmembers class * extends android.app.Activity {
+   public void *(android.view.View);
+}
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keep class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
+
+-keepclassmembers class * extends android.app.Activity {
+   *;
+}
+
+-keep class com.runmit.sweedee.model.TaskInfo{
+	*;
+}
+
+-keepclassmembers class * {
+   public <init>(org.json.JSONObject);
+}
+
+-keep public class com.runmit.vrlauncher.R$*{
+    public static final int *;
+}
+
+-keep class com.runmit.sweedee.report.sdk.ReportItem{
+	*;
+}
+
+-keep class com.runmit.vrlauncher.manager.data.InstallInfo{
+	*;
+}
+
+-keep class com.runmit.user.member.task.OpenCountryCode{
+	*;
+}
+
+-keep class com.runmit.user.member.task.OpenCountryCode$*{
+	*;
+}
+
+-keep class com.runmit.vrlauncher.geturls.GLSBAlbumGson{
+	*;
+}
+
+-keep class com.runmit.vrlauncher.geturls.GLSBAlbumGson$*{
+	*;
+}
+
+-keep class com.runmit.vrlauncher.geturls.GLSBUrlsGson{
+	*;
+}
+
+-keep class com.runmit.vrlauncher.test.TestPackInfo {
+	*;
+}
+
+-keep class com.runmit.vrlauncher.geturls.GLSBUrlsGson$*{
+	*;
+}
+
+-keep class com.runmit.user.member.provider.MemberInfo{
+	*;
+}
+
+-keep class com.runmit.sweedee.report.sdk.ReportConfig{
+	*;
+}
+
+-keep class com.runmit.vrlauncher.manager.UnityInterfaceManager{
+	*;
+}
+
+-keep class com.runmit.sweedee.downloadinterface.DownloadEngine
+-keepclassmembers class com.runmit.sweedee.downloadinterface.DownloadEngine {
+	public long mTaskId;
+	private java.lang.String fileName;
+		
+	public void jniCall_switchThread(...);
+	public int jniCall_taskStateChanged(...);
+}
+
+-keep class android.content.pm.* {
+	*;
+}
+
+-keep class com.runmit.vrlauncher.model.** {*;}
+-keep class com.runmit.sweedee.model.** {*;}
+-keep class com.runmit.player.model.** {*;}
+-keep class com.runmit.vrlauncher.moduleInfo.** {*;}
+-keep class com.runmit.vrlauncher.datadao.** {*;}
+-keep class com.runmit.common.manager.data.** {*;}
+-keep class android.support.v4.** {*;}
+-keep class android.support.v7.** {*;}
+-keep class org.apache.**{*;}
+-keep class de.mindpipe.android.logging.log4j.**{*;}
+-keep class org.apache.log4j.**{*;}
+-keep class com.google.gson.**{*;}
+-keep class com.alipay.**{*;}
+-keep class com.unionpay.** {*;}
+-keep class de.greenrobot.dao.** {*;}
+-keep class com.superd.sdsdk.** {*;}
+-keep class com.UCMobile.PayPlugin.** {*;}
+-keep class com.skymobi.pay.** {*;}
+-keep class com.runmit.vrlauncher.messagepush.MessagePushReceiver.** {*;}
+-keep class com.google.** {*;}
+-keep class bitter.jnibridge.** {*;}
+-keep class com.unity3d.player.** {*;}
+-keep class org.fmod.** {*;}
+-keep class bitter.jnibridge.** {*;}
+-keep class com.runmit.player.media.** {*;}
+-keep class com.ipaynow.plugin.inner_plugin.wechatwp.activity.** {*;}
+-keep class com.google.zxing.** {*;}
+-keep class android.support.v8.** {*;}
+-keep class com.wasu.** {*;}
+-keep class com.superd.paysdk.** {*;}
+-keep class com.iflytek.** {*;}
+-keep class org.mozilla.universalchardet.** {*;}
+-keep class com.ipaynow.plugin.** {*;}
+-keep class superd.store.service.** {*;}
+-keep class com.superd.stereowrapper.** {*;}
+-keep class superd.stereo.gleswapper.** {*;}
+-keep class com.runmit.game.profile.** {*;}
+-keep class com.superd.s3dvr.sdk.ext.** {*;}
+-keep class com.superd.s3dvr.sdk.** {*;}
