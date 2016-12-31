@@ -24,31 +24,12 @@ public class NativeInterface {
 	}
 
 	public delegate void RequestListener(int rtn, string result);
-	public string callHello(RequestListener listener) {
-		string ssss = "hello default";
+	public RxjavaDisposable callHello(RequestListener listener) {
 		if(isAndroid){
-			ssss = mMainInterfaceObject.Call<string>("hello", new AdLocusListenerCallBack(listener));
+			AndroidJavaObject helloDisposable = mMainInterfaceObject.Call<AndroidJavaObject>("hello", new AdLocusListenerCallBack(listener));
+			return new RxjavaDisposable(helloDisposable);
 		}
 
-		return ssss;
+		return null;
 	}
-
-
-	public class AdLocusListenerCallBack : AndroidJavaProxy {
-		RequestListener callback;
-		public AdLocusListenerCallBack(RequestListener call):base("com.test.callbacktest.IUnityCallback") {
-			callback = call;
-		}
-		public virtual void onSuccess(string result) {
-			if(callback != null) {
-				callback(0, result);
-			}
-		}
-		public virtual void onError(int errorcode, string msg) {
-			if(callback != null) {
-				callback(errorcode, msg);
-			}
-		}
-	}
-
 }

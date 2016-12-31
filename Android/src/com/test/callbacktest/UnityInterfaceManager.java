@@ -1,8 +1,21 @@
 package com.test.callbacktest;
 
+import android.util.Log;
+
+import org.reactivestreams.Subscriber;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 /**
  * Created by Zuffy.Ma on 2016/12/28.
@@ -11,6 +24,7 @@ import io.reactivex.ObservableOnSubscribe;
 
 public class UnityInterfaceManager {
 
+    private static final String TAG = "UnityInterfaceManager";
     private static UnityInterfaceManager _manager;
 
     public static UnityInterfaceManager getInstance() {
@@ -24,34 +38,40 @@ public class UnityInterfaceManager {
         return  _manager;
     }
 
-    IUnityCallback callback;
-    public String hello(IUnityCallback call) {
-        callback = call;
-        dosomething();
-        return "hello world.";
+    public Disposable hello(final IUnityCallback call) {
+        return Observable.defer(new Callable<ObservableSource<String>>() {
+                    @Override
+                    public ObservableSource<String> call() throws Exception {
+                        return dosomething();
+                    }
+                })
+                .map(new Function<String, String>() {
+                    @Override
+                    public String apply(String integer) throws Exception {
+                        return  String.valueOf(integer);
+                    }
+                })
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String o) throws Exception {
+                        Log.d(TAG, "res:" + o);
+                        call.onSuccess(o);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        call.onError(-1, throwable.getMessage());
+                    }
+                });
     }
 
-
-    private void dosomething() {
-        new Thread(new Runnable() {
+    private Observable dosomething() {
+        return Observable.zip(Observable.interval(1, TimeUnit.SECONDS).take(3), Observable.just("hello world 111", "i am java", "test"), new BiFunction() {
             @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                    if(callback != null) {
-                        callback.onSuccess("hello world success!");
-                    }
-                    Thread.sleep(2000);
-                    if(callback != null) {
-                        callback.onError(-1, "hello world error!");
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }finally {
-                    callback = null;
-                }
+            public Object apply(Object o, Object o2) throws Exception {
+                return o  + " " + o2;
             }
-        }).start();
+        });
     }
 
 }
